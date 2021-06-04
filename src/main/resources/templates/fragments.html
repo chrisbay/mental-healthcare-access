@@ -9,15 +9,15 @@
 <body>
 <nav th:fragment="header"><!-- Navigation header -->
     <div style="background: url(https://images.unsplash.com/photo-1470569584027-67bf7fa60807?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)" class="jumbotron bg-cover text-white">
-        <h1 th:text="${title}">Mental Healthcare Access</h1>
+        <h1 th:text="#{title}">Mental Healthcare Access</h1>
         <ul class="nav">
             <li class="nav-item"><a class="nav-link" href="/providers" th:text="#{home}"></a></li>
             <li class="nav-item"><a class="nav-link" href="#">Placeholder 1</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Placeholder 2</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Placeholder 3</a></li>
             <li class="nav-item"><a class="nav-link" href="/provider/login" th:text="#{pLogin}"></a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout" th:text="#{pLogout}"></a></li>
             <li class="nav-item"><a class="nav-link" href="/provider/signup" th:text="#{pSignup}"></a></li>
+            <li class="nav-item"><a class="nav-link" href="/logout" th:text="#{logout}"></a></li>
 
         </ul>
     </div>
