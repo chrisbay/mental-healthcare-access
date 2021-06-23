@@ -4,22 +4,19 @@ import org.launchcode.mentalhealthcareaccess.models.data.ProviderRepository;
 import org.launchcode.mentalhealthcareaccess.models.Provider;
 
 import org.launchcode.mentalhealthcareaccess.models.data.dto.LoginFormDTO;
-import org.launchcode.mentalhealthcareaccess.models.data.dto.ProviderLanguagesDTO;
+import org.launchcode.mentalhealthcareaccess.models.data.dto.ProviderSettingsDTO;
 import org.launchcode.mentalhealthcareaccess.models.data.dto.RegisterFormDTO;
 import org.launchcode.mentalhealthcareaccess.models.dto.UserLoginFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 @Controller
@@ -65,6 +62,13 @@ public class ProviderController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Sign-up");
+            return "provider/signup";
+        }
+
+        if (registerFormDTO.getEmail() == "") {
+            //This is a custom error
+            errors.rejectValue("email", "email.isBlank", "An email is required.");
+            model.addAttribute("title", "Sign-Up");
             return "provider/signup";
         }
 
@@ -164,7 +168,7 @@ public class ProviderController {
         session.setAttribute("phone", theProvider.getPhoneNumber());
         session.setAttribute("providerId", theProvider.getId());
         session.setAttribute("languages", theProvider.getLanguages());
-        session.setAttribute("provider", theProvider);
+
         //Login to dashboard
         return "/provider/dashboard";
     }
@@ -180,29 +184,43 @@ public class ProviderController {
         return "/provider/dashboard";
     }
         //Change languages for services provided
+        private static final String INSURANCE_TYPES = "insuranceTypes";
+
+
+
     @GetMapping("/provider/settings")
-    public String displaySettingsForm(Model model, Provider theProvider, HttpSession session){
-        ProviderLanguagesDTO providerLanguages = new ProviderLanguagesDTO();
+    public String displaySettingsForm(Model model,
+                                      HttpSession session){
+        ProviderSettingsDTO providerSettings = new ProviderSettingsDTO();
         Integer providerId = (Integer) session.getAttribute("providerId");
        Optional<Provider> result = providerRepository.findById(providerId);
        Provider modProvider = result.get();
         model.addAttribute("title", "Settings");
         model.addAttribute("languages", Languages.values());
-        providerLanguages.setProvider(modProvider);
-        model.addAttribute("providerLanguages", providerLanguages);
+        model.addAttribute("modProvider", modProvider);
+        providerSettings.setProvider(modProvider);
+        model.addAttribute("providerSettings", providerSettings);
         model.addAttribute("currentLanguages", modProvider.getLanguages());
+        model.addAttribute("insuranceTypes", Arrays.asList(" MedicAid", " MediCare", " Private", " Self-Pay Discount", " Veteran's Affairs"));
+
+
         return "/provider/settings";
     }
 
+
     @PostMapping ("/provider/settings")
-    public String processSettingsForm(@ModelAttribute @Valid ProviderLanguagesDTO providerLanguages,
+    public String processSettingsForm(@ModelAttribute @Valid ProviderSettingsDTO providerSettings,
                                       Errors errors,
                                       Model model,
                                       HttpSession session,
-                                      Provider theProvider){
+                                      Provider modProvider,  @RequestParam List<String> insuranceValues){
+        if (!modProvider.getInsurance().contains(insuranceValues)) {
+            modProvider.setInsurance(insuranceValues);
+        }
+        providerRepository.save(modProvider);
         if (!errors.hasErrors()){
-            Provider provider = providerLanguages.getProvider();
-            Languages languages = providerLanguages.getLanguages();
+            Provider provider = providerSettings.getProvider();
+            Languages languages = providerSettings.getLanguages();
                 if (!provider.getLanguages().contains(languages)) {
                     provider.addLanguages(languages);
                     providerRepository.save(provider);
@@ -213,10 +231,4 @@ public class ProviderController {
         return "/provider/dashboard";
     }
 
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request){
-        request.getSession().invalidate();
-        return "redirect:/provider/login";
-    }
 }

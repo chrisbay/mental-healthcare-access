@@ -11,44 +11,44 @@
 
 <form method="post" style="max-width:600px;">
     <div class="form-group">
-        <label th:for="companyName" th:text="#{compName}"></label>
+        <label th:for="companyName">Company Name</label>
         <input class="form-control" th:field="${registerFormDTO.companyName}" />
         <span th:errors="${registerFormDTO.companyName}" class="error"></span>
     </div>
-
     <div class="form-group">
-        <label th:for="firstName" th:text="#{fNameNoComp}"></label>
+        <label th:for="firstName">Provider First name (only if you did not use a Company Name)</label>
         <input class="form-control" th:field="${registerFormDTO.firstName}" />
         <span th:errors="${registerFormDTO.firstName}" class="error"></span>
     </div>
 
     <div class="form-group">
-        <label th:for="lastName" th:text="#{lNameNoComp}"></label>
+        <label th:for="lastName">Last Name (only if you did not use a Company Name)</label>
         <input class="form-control" th:field="${registerFormDTO.lastName}" />
         <span th:errors="${registerFormDTO.lastName}" class="error"></span>
     </div>
 
     <div class="form-group">
-        <label th:for="phoneNumber" th:text="#{phone}"></label>
+        <label th:for="phoneNumber">Phone Number</label>
         <input class="form-control" th:field="${registerFormDTO.phoneNumber}" />
         <span th:errors="${registerFormDTO.phoneNumber}" class="error"></span>
     </div>
 
     <div class="form-group">
-        <label th:for="email" th:text="#{email}"></label>
-        <input class="form-control" th:field="${registerFormDTO.email}" />
+        <label>e-mail
+            <input class="form-control" th:field="${registerFormDTO.email}" />
+        </label>
         <p class="error" th:errors="${registerFormDTO.email}"></p>
     </div>
-
     <div class="form-group">
-        <label th:for="password" th:text="#{password}"></label>
-        <input class="form-control" th:field="${registerFormDTO.password} " type="password"/>
+        <label>Password
+            <input class="form-control" th:field="${registerFormDTO.password} " type="password"/>
+        </label>
         <p class="error" th:errors="${registerFormDTO.password}"></p>
     </div>
-
     <div class="form-group">
-        <label th:for="verifyPassword" th:text="#{verifyPw}"></label>
-        <input class="form-control" th:field="${registerFormDTO.verifyPassword}" type="password"/>
+        <label>Verify Password
+            <input class="form-control" th:field="${registerFormDTO.verifyPassword}" type="password"/>
+        </label>
     </div>
     <div class="form-group">
         <label>Primary language of your practice
@@ -63,12 +63,8 @@
 
     </div>
 
-    <button th:text="#{sButton} "type="submit"/></button>
+    <input type="submit" value="Sign-up" />
 </form>
-
-<a href="http://localhost:8080/provider/signup?lang=en">English</a>
-<span>|</span>
-<a href="http://localhost:8080/provider/signup?lang=es">Español</a>
 
 </body>
 </html>

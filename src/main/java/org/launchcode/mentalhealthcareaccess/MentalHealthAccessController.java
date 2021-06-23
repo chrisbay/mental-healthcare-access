@@ -1,4 +1,4 @@
-package org.launchcode.mentalhealthcareaccess.controllers;
+package org.launchcode.mentalhealthcareaccess;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

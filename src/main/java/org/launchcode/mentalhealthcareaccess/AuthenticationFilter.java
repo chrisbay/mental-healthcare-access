@@ -1,6 +1,8 @@
 package org.launchcode.mentalhealthcareaccess;
 
+import org.launchcode.mentalhealthcareaccess.controllers.ProviderController;
 import org.launchcode.mentalhealthcareaccess.controllers.UserSignupController;
+import org.launchcode.mentalhealthcareaccess.models.Provider;
 import org.launchcode.mentalhealthcareaccess.models.User;
 import org.launchcode.mentalhealthcareaccess.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
     @Autowired
     UserSignupController userSignupController;
+
+    @Autowired
+    ProviderController providerController;
 
     private static final List<String> whitelist = Arrays.asList("/user/login", "/user/signup", "/provider/login", "/provider/signup", "/logout", "/css", "/webjar");
 
@@ -41,8 +46,9 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
         HttpSession session = request.getSession();
         User user = userSignupController.getUserFromSession(session);
+        Provider provider = providerController.getProviderFromSession(session);
 
-        if (user != null) {
+        if (user != null || provider != null) {
             return true;
         }
 

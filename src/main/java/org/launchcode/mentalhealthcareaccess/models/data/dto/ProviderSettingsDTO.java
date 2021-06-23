@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProviderLanguagesDTO {
+public class ProviderSettingsDTO {
 
     @NotNull
     private Provider provider;
@@ -15,7 +15,7 @@ public class ProviderLanguagesDTO {
     @NotNull
     private Languages languages;
 
-    public ProviderLanguagesDTO() {
+    public ProviderSettingsDTO() {
     }
 
     public Provider getProvider() {

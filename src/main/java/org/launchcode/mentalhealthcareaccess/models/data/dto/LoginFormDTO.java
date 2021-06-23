@@ -1,5 +1,6 @@
 package org.launchcode.mentalhealthcareaccess.models.data.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,6 +10,7 @@ public class LoginFormDTO {
 
         @NotNull
         @NotBlank
+        @Email(message = "Invalid email. Try again.")
         private String email;
 
         @NotNull

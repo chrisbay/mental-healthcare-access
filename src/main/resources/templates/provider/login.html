@@ -9,27 +9,24 @@
 
 
 
-
 <form method="post" style="max-width:600px;">
     <div class="form-group">
-        <label th:for="email" th:text="#{email}"></label>
-        <input class="form-control" th:field="${loginFormDTO.email}">
+        <label th:for="email">e-mail
+            <input class="form-control" th:field="${loginFormDTO.email}">
+        </label>
         <p class="error" th:errors="${loginFormDTO.email}"></p>
     </div>
     <div class="form-group">
-        <label th:for="password" th:text="#{password}"></label>
-        <input class="form-control" th:field="${loginFormDTO.password}" type="password">
+        <label>Password
+            <input class="form-control" th:field="${loginFormDTO.password}" type="password">
+        </label>
         <p class="error" th:errors="${loginFormDTO.password}" ></p>
     </div>
 
-    <button th:text="#{lButton} "type="submit"/></button>
+    <input type="submit" value="Log In" />
 </form>
 
 <p>If you don't have an account, <a href="/provider/signup">register for one now.</a></p>
-
-<a href="http://localhost:8080/provider/login?lang=en">English</a>
-<span>|</span>
-<a href="http://localhost:8080/provider/login?lang=es">Español</a>
 
 </body>
 </html>

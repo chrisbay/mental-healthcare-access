@@ -11,15 +11,35 @@
 
 <form method="post" style="max-width:600px;">
     <div class="form-group">
-        <label> <p Set the languages in which you provide services></p>
+        <p >Select the languages in which you provide services</p>
+        <label>
             <p th:text="${'Languages that you currently support: ' + currentLanguages + ' '}"></p>
-            <input type = "hidden" th:field="${providerLanguages.provider}">
-            <select th:field = "${providerLanguages.languages}">
+            <input type = "hidden" th:field="${providerSettings.provider}">
+            <select th:field = "${providerSettings.languages}">
                 <option th:each="languages : ${T(org.launchcode.mentalhealthcareaccess.models.Languages).values()}"
                         th:value="${languages}"
                         th:text="${languages.displayValue}">
                 </option>
             </select>
+        </label>
+    </div>
+    <p> Select the insurance options that you accept</p>
+    <div>
+        <p th:text="${'Types of insurance that you currently support: ' + modProvider.getInsurance + ' '}"></p>
+        <label>
+          <!--  <ul>
+                <li th:each="ins : ${allInsurance}">
+                    <input type="checkbox" th:field="${newInsurance}" th:value="${ins}"/>
+                    <label th:for="${#ids.prev('insurance')}"
+                           th:text="${ins}">Insurance</label>
+                </li>
+            </ul>-->
+            <ul>
+                <li th:each="ins : ${insuranceTypes}">
+                    <input type="checkbox" name="insuranceValues" th:value="${ins}" th:checked= "${#lists.contains(modProvider.getInsurance, ins)}" />
+                    <label th:text="${ins}"></label>
+                </li>
+            </ul>
         </label>
     </div>
         <input type="submit" value="Save" />

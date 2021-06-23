@@ -13,7 +13,7 @@ import java.util.Objects;
 public abstract class AbstractEntity {
     @Id
     @GeneratedValue
-    protected int id;
+    private int id;
 
     public int getId() {
         return id;
