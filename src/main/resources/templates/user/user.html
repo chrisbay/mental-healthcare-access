@@ -4,5 +4,16 @@
 <body class="container body-content">
 <nav th:replace="fragments :: header"></nav>
     <h1 th:text="${welcome}"></h1>
+
+<div>
+    <h3>My Dashboard</h3>
+<p th:text="${'Name: ' + session.firstName + ' ' + session.lastName}"></p>
+<p th:text="${'E-mail: ' + session.email}"></p>
+
+
+
+</div>
+
+
 </body>
 </html>

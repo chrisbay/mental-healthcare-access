@@ -31,7 +31,8 @@ public class UserSignupController {
     }
 
     @PostMapping("/user/signup")
-    public String processSignUpForm(@ModelAttribute @Valid UserSignupFormDTO userSignupFormDTO, Errors errors, HttpServletRequest request, Model model) {
+    public String processSignUpForm(@ModelAttribute @Valid UserSignupFormDTO userSignupFormDTO, Errors errors,
+                                    HttpServletRequest request, HttpSession session, Model model) {
         if (errors.hasErrors()) {
             return "user/signup";
         }
@@ -53,6 +54,10 @@ public class UserSignupController {
         User newUser = new User(userSignupFormDTO.getFirstName(), userSignupFormDTO.getLastName(), userSignupFormDTO.getEmail(), userSignupFormDTO.getPassword());
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
+
+        session.setAttribute("firstName", newUser.getFirstName());
+        session.setAttribute("lastName", newUser.getLastName());
+        session.setAttribute("email", newUser.getEmail());
 
         return "redirect:";
     }
